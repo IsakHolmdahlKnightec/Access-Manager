@@ -59,7 +59,6 @@ Additional design artifacts exist for specific views:
 All commands are run from the `/web` directory:
 
 ```bash
-cd /Users/isakholmdahl/Git/openspec-access-manager/web
 
 # Development
 npm run dev              # Start development server (Next.js dev mode)
