@@ -1,112 +1,137 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Shield, Key, Users, Clock, Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <h1 className="text-4xl font-bold text-primary">
-          Next.js + Tailwind + shadcn/ui
-        </h1>
-        <div className="flex gap-4">
-          <Button>Default Button</Button>
-          <Button variant="outline">Outline Button</Button>
-          <Button variant="secondary">Secondary Button</Button>
+    <div className="flex flex-col min-h-screen">
+      {/* Hero Section */}
+      <section className="relative flex items-center justify-center min-h-[70vh] bg-gradient-primary overflow-hidden">
+        {/* Background pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--color-primary-container)_0%,_transparent_70%)]" />
         </div>
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
+            {/* Hero Icon */}
+            <div className="mb-8 p-4 rounded-2xl bg-white/10 backdrop-blur-sm">
+              <Shield className="w-16 h-16 text-white" />
+            </div>
+            
+            {/* Title */}
+            <h1 className="text-display-lg md:text-display-lg text-white mb-6">
+              Access Manager
+            </h1>
+            
+            {/* Tagline */}
+            <p className="text-headline-sm md:text-headline-md text-white/90 mb-8 max-w-2xl leading-relaxed">
+              Secure, efficient, and user-friendly access management for your organization. 
+              Streamline permissions, track access requests, and maintain security with ease.
+            </p>
+            
+            {/* CTA Button */}
+            <Button
+              asChild
+              size="lg"
+              className="bg-white text-primary hover:bg-white/90 px-8 py-6 text-title-md font-semibold shadow-elevated transition-all duration-200 hover:scale-105"
+            >
+              <Link href="#features">
+                Explore Features
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Features Section */}
+      <section id="features" className="py-20 md:py-32 bg-surface">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-headline-lg md:text-headline-lg text-on-surface mb-4">
+              Key Features
+            </h2>
+            <p className="text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+              Everything you need to manage access permissions effectively
+            </p>
+          </div>
+
+          {/* Feature Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {/* Feature 1: Secure Access */}
+            <div className="group p-8 rounded-xl bg-surface-container-lowest transition-all duration-200 hover:bg-surface-container-low hover:shadow-ambient">
+              <div className="w-14 h-14 rounded-xl bg-primary-container flex items-center justify-center mb-6 transition-transform duration-200 group-hover:scale-110">
+                <Lock className="w-7 h-7 text-on-primary-container" />
+              </div>
+              <h3 className="text-title-lg font-semibold text-on-surface mb-3">
+                Secure Access Control
+              </h3>
+              <p className="text-body-md text-on-surface-variant leading-relaxed">
+                Granular permission management with role-based access control. 
+                Ensure users only access what they need.
+              </p>
+            </div>
+
+            {/* Feature 2: User Management */}
+            <div className="group p-8 rounded-xl bg-surface-container-lowest transition-all duration-200 hover:bg-surface-container-low hover:shadow-ambient">
+              <div className="w-14 h-14 rounded-xl bg-secondary-container flex items-center justify-center mb-6 transition-transform duration-200 group-hover:scale-110">
+                <Users className="w-7 h-7 text-on-secondary-container" />
+              </div>
+              <h3 className="text-title-lg font-semibold text-on-surface mb-3">
+                User Management
+              </h3>
+              <p className="text-body-md text-on-surface-variant leading-relaxed">
+                Efficiently manage users, groups, and departments. 
+                Streamlined onboarding and offboarding processes.
+              </p>
+            </div>
+
+            {/* Feature 3: Access Requests */}
+            <div className="group p-8 rounded-xl bg-surface-container-lowest transition-all duration-200 hover:bg-surface-container-low hover:shadow-ambient">
+              <div className="w-14 h-14 rounded-xl bg-tertiary-container flex items-center justify-center mb-6 transition-transform duration-200 group-hover:scale-110">
+                <Key className="w-7 h-7 text-on-tertiary-container" />
+              </div>
+              <h3 className="text-title-lg font-semibold text-on-surface mb-3">
+                Access Requests
+              </h3>
+              <p className="text-body-md text-on-surface-variant leading-relaxed">
+                Streamlined request workflows with automated approvals. 
+                Track requests from submission to resolution.
+              </p>
+            </div>
+
+            {/* Feature 4: Audit & Compliance */}
+            <div className="group p-8 rounded-xl bg-surface-container-lowest transition-all duration-200 hover:bg-surface-container-low hover:shadow-ambient">
+              <div className="w-14 h-14 rounded-xl bg-info-container flex items-center justify-center mb-6 transition-transform duration-200 group-hover:scale-110">
+                <Clock className="w-7 h-7 text-on-info-container" />
+              </div>
+              <h3 className="text-title-lg font-semibold text-on-surface mb-3">
+                Audit & Compliance
+              </h3>
+              <p className="text-body-md text-on-surface-variant leading-relaxed">
+                Comprehensive audit trails and compliance reporting. 
+                Maintain visibility into all access activities.
+              </p>
+            </div>
+
+            {/* Feature 5: Self-Service */}
+            <div className="group p-8 rounded-xl bg-surface-container-lowest transition-all duration-200 hover:bg-surface-container-low hover:shadow-ambient md:col-span-2 lg:col-span-2">
+              <div className="w-14 h-14 rounded-xl bg-success-container flex items-center justify-center mb-6 transition-transform duration-200 group-hover:scale-110">
+                <Shield className="w-7 h-7 text-on-success-container" />
+              </div>
+              <h3 className="text-title-lg font-semibold text-on-surface mb-3">
+                Self-Service Portal
+              </h3>
+              <p className="text-body-md text-on-surface-variant leading-relaxed max-w-xl">
+                Empower users with a self-service portal for managing their own access, 
+                viewing permissions, and requesting new access. Reduce IT burden while 
+                maintaining security and compliance standards.
+              </p>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
     </div>
   );
 }

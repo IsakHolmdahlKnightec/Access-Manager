@@ -1,20 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { Header } from "@/components/layout/header";
 
 export const metadata: Metadata = {
-  title: "My Next.js App",
-  description: "A modern web application built with Next.js, TypeScript, Tailwind CSS, and shadcn/ui",
+  title: "Access Manager",
+  description: "Secure, efficient, and user-friendly access management for your organization",
 };
 
 export default function RootLayout({
@@ -24,10 +14,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className="antialiased min-h-screen bg-surface text-on-surface font-sans">
+        <Header />
+        <main className="flex-1">
+          {children}
+        </main>
       </body>
     </html>
   );

@@ -35,9 +35,9 @@ This system provides developer access management for enterprise environments, fe
   - [x] Typography definitions
   - [x] Spacing scale
   - [x] Border radius, shadows
-- [ ] Create placeholder pages
-  - [ ] Home/Landing page
-  - [ ] Basic layout structure
+- [x] Create placeholder pages
+  - [x] Home/Landing page
+  - [x] Basic layout structure
 
 ### Deliverables
 - Running Next.js application
