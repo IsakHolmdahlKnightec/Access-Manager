@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Vault - Access Management Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#071e27",
+                        "secondary-fixed": "#cfe6f2",
+                        "primary-container": "#002855",
+                        "on-tertiary-fixed-variant": "#6d3918",
+                        "surface-bright": "#fcf9f8",
+                        "secondary-fixed-dim": "#b4cad6",
+                        "surface-container-highest": "#e5e2e1",
+                        "on-surface-variant": "#43474f",
+                        "on-background": "#1c1b1b",
+                        "surface-dim": "#dcd9d9",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#280c00",
+                        "secondary": "#4c616c",
+                        "on-secondary-container": "#526772",
+                        "primary-fixed": "#d6e3ff",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "outline": "#74777f",
+                        "outline-variant": "#c3c6d0",
+                        "inverse-primary": "#a9c7ff",
+                        "primary": "#001430",
+                        "inverse-on-surface": "#f3f0ef",
+                        "surface-container-low": "#f6f3f2",
+                        "on-surface": "#1c1b1b",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#001b3d",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb68e",
+                        "on-primary-fixed-variant": "#0e4686",
+                        "on-tertiary-container": "#c48059",
+                        "tertiary-fixed": "#ffdbca",
+                        "surface-tint": "#305ea0",
+                        "on-primary-container": "#6691d6",
+                        "on-secondary-fixed-variant": "#354a53",
+                        "tertiary-container": "#481c00",
+                        "surface-container-high": "#ebe7e7",
+                        "surface-variant": "#e5e2e1",
+                        "secondary-container": "#cfe6f2",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#f0edec",
+                        "surface": "#fcf9f8",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#331200",
+                        "inverse-surface": "#313030",
+                        "background": "#fcf9f8"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#F8FAFC] text-on-surface">
+<!-- SideNavBar Anchor -->
+<aside class="bg-white dark:bg-slate-900 h-screen w-64 fixed left-0 top-0 flex flex-col py-8 px-4 z-50 border-r border-slate-200 dark:border-slate-800">
+<div class="mb-10 px-2">
+<h1 class="text-2xl font-black tracking-tighter text-blue-950 dark:text-blue-50">The Vault</h1>
+<p class="text-[0.6875rem] font-bold uppercase tracking-widest text-blue-600/60">Secure Session</p>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Active Tab: Dashboard -->
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-blue-900 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-900/20 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:text-blue-900 dark:hover:text-blue-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+<span class="text-sm">Access Portfolio</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:text-blue-900 dark:hover:text-blue-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="add_moderator">add_moderator</span>
+<span class="text-sm">Request Access</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:text-blue-900 dark:hover:text-blue-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors font-medium" href="#">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+<span class="text-sm">Security Logs</span>
+</a>
+</nav>
+<div class="mt-auto space-y-2">
+<button class="w-full bg-primary text-on-primary py-3 rounded-xl font-bold text-sm mb-6 active:scale-95 transition-transform shadow-lg shadow-blue-900/20">
+                Quick Request
+            </button>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:text-blue-900 text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:text-blue-900 text-sm font-medium" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="help_outline">help_outline</span>
+<span>Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Flow -->
+<main class="ml-64 min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-white/85 dark:bg-slate-950/85 backdrop-blur-md flex justify-between items-center h-16 px-8 sticky top-0 z-40 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-8">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="bg-slate-100 border-none rounded-full pl-10 pr-4 py-1.5 text-sm w-72 focus:ring-2 focus:ring-blue-500 transition-all" placeholder="Search resources..." type="text"/>
+</div>
+<nav class="hidden md:flex gap-8">
+<a class="text-blue-900 dark:text-blue-400 border-b-2 border-blue-900 dark:border-blue-400 pb-5 text-sm font-bold mt-1" href="#">Directory</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-950 transition-colors text-sm font-medium" href="#">Policies</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-950 transition-colors text-sm font-medium" href="#">Audit</a>
+</nav>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 text-slate-500 hover:bg-slate-100 transition-colors rounded-full relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2.5 right-2.5 w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+</button>
+<div class="h-6 w-[1px] bg-slate-200 mx-1"></div>
+<div class="flex items-center gap-3 pl-2">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-bold text-primary">Alex Chen</p>
+<p class="text-[0.625rem] text-slate-500">Sr. SRE</p>
+</div>
+<img alt="Employee Avatar" class="w-8 h-8 rounded-full border border-slate-200 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4gUErKzZG1iY8qmrD7sq8uL10zilj_F1mX1g5Rdh_sHFY0XkTR_ImAZH1o003Hr5dGm-RIvfP-Mpi5MuawMuV43KA1iyiZcKmqn2TJIu1ohqVr4gpOzxbVDXUTERyvbfKVseyzhBjynTHph5JnWYqNWGAwxTiTijuLdKbamYZ9va2i68ZUmqm9NZ2LChO_JRA3VkH7_DyFmMHd0RvnLktgUU-iDDRLlLL6Lr-h0SB9eYb-cQMJmKfLEVhjsEMbpKhT2itk0JlTsmp"/>
+</div>
+</div>
+</header>
+<!-- Dashboard Canvas -->
+<div class="p-8 max-w-7xl mx-auto space-y-8">
+<!-- Hero Header -->
+<section class="flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="text-center md:text-left">
+<h2 class="text-3xl font-black tracking-tight text-primary">Security Command</h2>
+<p class="text-sm text-slate-500 font-medium">Monitoring active credentials and system health</p>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 bg-white border border-slate-200 text-slate-600 rounded-xl text-sm font-bold hover:bg-slate-50 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-lg" data-icon="filter_list">filter_list</span>
+                        Filter
+                    </button>
+<button class="px-4 py-2 bg-primary text-on-primary rounded-xl text-sm font-bold flex items-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-lg" data-icon="ios_share">ios_share</span>
+                        Export
+                    </button>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Current Accesses Card (Large) -->
+<div class="col-span-12 lg:col-span-8 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-lg font-bold text-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-blue-600" data-icon="key">key</span>
+                            Current Accesses
+                        </h3>
+<span class="text-[0.6875rem] font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full uppercase tracking-wider">12 Active</span>
+</div>
+<div class="grid gap-3">
+<!-- Access Item -->
+<div class="flex items-center justify-between p-4 bg-slate-50/50 hover:bg-slate-50 rounded-xl border border-transparent hover:border-slate-200 transition-all group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-white shadow-sm rounded-lg flex items-center justify-center text-blue-600 border border-slate-100">
+<span class="material-symbols-outlined" data-icon="cloud">cloud</span>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">AWS Production</p>
+<p class="text-xs text-slate-500">Auto-granted • Expires in 14d</p>
+</div>
+</div>
+<span class="text-[0.625rem] font-black uppercase tracking-widest text-slate-400 group-hover:text-blue-600 transition-colors">Admin</span>
+</div>
+<!-- Access Item -->
+<div class="flex items-center justify-between p-4 bg-slate-50/50 hover:bg-slate-50 rounded-xl border border-transparent hover:border-slate-200 transition-all group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-white shadow-sm rounded-lg flex items-center justify-center text-blue-600 border border-slate-100">
+<span class="material-symbols-outlined" data-icon="database">database</span>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">Postgres Read-Only</p>
+<p class="text-xs text-slate-500">By John Doe • Permanent</p>
+</div>
+</div>
+<span class="text-[0.625rem] font-black uppercase tracking-widest text-slate-400 group-hover:text-blue-600 transition-colors">Read</span>
+</div>
+<!-- Access Item -->
+<div class="flex items-center justify-between p-4 bg-slate-50/50 hover:bg-slate-50 rounded-xl border border-transparent hover:border-slate-200 transition-all group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-white shadow-sm rounded-lg flex items-center justify-center text-slate-400 border border-slate-100">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">VPN Gateway</p>
+<p class="text-xs text-slate-500">Role: Engineering</p>
+</div>
+</div>
+<span class="text-[0.625rem] font-black uppercase tracking-widest text-slate-400 group-hover:text-blue-600 transition-colors">Standard</span>
+</div>
+</div>
+</div>
+<!-- My Roles Card (Medium) -->
+<div class="col-span-12 lg:col-span-4 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col">
+<h3 class="text-lg font-bold text-primary mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-blue-600" data-icon="badge">badge</span>
+                        My Roles
+                    </h3>
+<div class="space-y-4 flex-1">
+<div class="p-4 bg-blue-50/50 rounded-xl border border-blue-100">
+<div class="flex items-center justify-between mb-2">
+<p class="text-[0.625rem] font-black text-blue-600 uppercase tracking-widest">Primary Role</p>
+<span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+</div>
+<p class="text-base font-bold text-primary">Senior Site Reliability</p>
+<p class="text-xs text-slate-600 mt-1 leading-relaxed">Full deployment pipelines &amp; cluster monitoring.</p>
+</div>
+<div class="p-4 bg-slate-50/50 rounded-xl border border-slate-100">
+<p class="text-[0.625rem] font-black text-slate-400 uppercase tracking-widest mb-2">Secondary Role</p>
+<p class="text-sm font-bold text-slate-700">Compliance Auditor</p>
+</div>
+</div>
+<div class="mt-6 p-3 bg-slate-100 rounded-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm text-slate-500" data-icon="timer">timer</span>
+<p class="text-[0.7rem] font-bold text-slate-500 uppercase tracking-tight">Session: 4h 12m remaining</p>
+</div>
+</div>
+<!-- Recent Activity (Full Width/Large) -->
+<div class="col-span-12 bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h3 class="text-xl font-bold text-primary">Recent Activity</h3>
+<p class="text-sm text-slate-500">System audit trail for last 24h</p>
+</div>
+<button class="text-blue-600 font-bold text-sm hover:underline underline-offset-4">View Full Ledger</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-12">
+<!-- Activity Log -->
+<div class="flex items-start gap-4">
+<div class="mt-1 w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-green-600">
+<span class="material-symbols-outlined text-sm" data-icon="login">login</span>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">Login Successful</p>
+<p class="text-[0.7rem] text-slate-500 font-medium">IP: 192.168.1.45 • 10:24 AM</p>
+</div>
+</div>
+<!-- Activity Log -->
+<div class="flex items-start gap-4">
+<div class="mt-1 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
+<span class="material-symbols-outlined text-sm" data-icon="lock_open">lock_open</span>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">Production Key Rotation</p>
+<p class="text-[0.7rem] text-slate-500 font-medium">Secret Manager • 09:15 AM</p>
+</div>
+</div>
+<!-- Activity Log -->
+<div class="flex items-start gap-4">
+<div class="mt-1 w-8 h-8 rounded-full bg-red-50 flex items-center justify-center text-red-600">
+<span class="material-symbols-outlined text-sm" data-icon="gpp_maybe">gpp_maybe</span>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">Access Denied</p>
+<p class="text-[0.7rem] text-slate-500 font-medium">HR_DB_Internal • 08:30 AM</p>
+</div>
+</div>
+<!-- Activity Log -->
+<div class="flex items-start gap-4">
+<div class="mt-1 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500">
+<span class="material-symbols-outlined text-sm" data-icon="update">update</span>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">Policy Updated</p>
+<p class="text-[0.7rem] text-slate-500 font-medium">Global_WFH_Access • Yesterday</p>
+</div>
+</div>
+<!-- Activity Log -->
+<div class="flex items-start gap-4">
+<div class="mt-1 w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
+<span class="material-symbols-outlined text-sm" data-icon="add_circle">add_circle</span>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">Elevated Access granted</p>
+<p class="text-[0.7rem] text-slate-500 font-medium">Project_X_Vault • Yesterday</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-on-primary rounded-2xl shadow-2xl flex items-center justify-center active:scale-95 transition-transform z-50 hover:rotate-90 transition-all duration-300">
+<span class="material-symbols-outlined scale-110" data-icon="add">add</span>
+</button>
+</body></html>

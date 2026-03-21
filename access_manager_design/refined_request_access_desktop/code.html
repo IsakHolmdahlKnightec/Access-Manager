@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#071e27",
+                        "secondary-fixed": "#cfe6f2",
+                        "primary-container": "#002855",
+                        "on-tertiary-fixed-variant": "#6d3918",
+                        "surface-bright": "#fcf9f8",
+                        "secondary-fixed-dim": "#b4cad6",
+                        "surface-container-highest": "#e5e2e1",
+                        "on-surface-variant": "#43474f",
+                        "on-background": "#1c1b1b",
+                        "surface-dim": "#dcd9d9",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#280c00",
+                        "secondary": "#4c616c",
+                        "on-secondary-container": "#526772",
+                        "primary-fixed": "#d6e3ff",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "outline": "#74777f",
+                        "outline-variant": "#c3c6d0",
+                        "inverse-primary": "#a9c7ff",
+                        "primary": "#001430",
+                        "inverse-on-surface": "#f3f0ef",
+                        "surface-container-low": "#f6f3f2",
+                        "on-surface": "#1c1b1b",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#001b3d",
+                        "on-error": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb68e",
+                        "on-primary-fixed-variant": "#0e4686",
+                        "on-tertiary-container": "#c48059",
+                        "tertiary-fixed": "#ffdbca",
+                        "surface-tint": "#305ea0",
+                        "on-primary-container": "#6691d6",
+                        "on-secondary-fixed-variant": "#354a53",
+                        "tertiary-container": "#481c00",
+                        "surface-container-high": "#ebe7e7",
+                        "surface-variant": "#e5e2e1",
+                        "secondary-container": "#cfe6f2",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#f0edec",
+                        "surface": "#fcf9f8",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#331200",
+                        "inverse-surface": "#313030",
+                        "background": "#fcf9f8"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 left-0 z-50 flex justify-between items-center h-16 ml-64 px-8 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-8">
+<div class="relative w-80 group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="w-full bg-slate-100 border-none rounded-md pl-10 pr-4 py-1.5 text-sm focus:ring-1 focus:ring-primary transition-all" placeholder="Search resources..." type="text"/>
+</div>
+<nav class="flex gap-6">
+<a class="text-slate-500 hover:text-primary transition-colors text-sm font-medium" href="#">Directory</a>
+<a class="text-slate-500 hover:text-primary transition-colors text-sm font-medium" href="#">Policies</a>
+<a class="text-slate-500 hover:text-primary transition-colors text-sm font-medium" href="#">Audit</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden bg-primary-container border border-slate-200">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBD_Mzd_mhy0hKf6XQPjc34GVZX5Ot-HawBrukNq6Pjalg2fTYSC65zxLLpC6AG0Zys1jbOLoBycS3xTTeKRTUzI2qyGSYtETiRh8z0LMhtDQTaRQjHuUqGCuIze3IqssWwH1DCdxYZ7Im4smlfwwUnUjrve-sWqcil_QevFrobd_EgfbZNIUlVNxd59FFzRqBe9nJ12X7NAEnKFYEOJjhq2ngwikPmKXYvwefJ2q5Nzxcvyc21axHktAT26SOlZctIqjcYRGwwgc25"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-slate-50 dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col py-8 px-6 z-50">
+<div class="mb-12">
+<h1 class="text-xl font-bold tracking-tight text-primary">The Vault</h1>
+<p class="text-[0.625rem] uppercase tracking-widest text-slate-400 mt-1 font-bold">Secure Session</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-md text-slate-500 hover:bg-slate-100 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span class="text-sm font-semibold">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-md text-slate-500 hover:bg-slate-100 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="verified_user">verified_user</span>
+<span class="text-sm font-semibold">Access Portfolio</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-md text-primary bg-white shadow-sm border border-slate-100" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="add_moderator">add_moderator</span>
+<span class="text-sm font-bold">Request Access</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-md text-slate-500 hover:bg-slate-100 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="history_edu">history_edu</span>
+<span class="text-sm font-semibold">Security Logs</span>
+</a>
+</nav>
+<div class="pt-8 mt-8 border-t border-slate-200 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+<span class="text-sm font-semibold">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="help_outline">help_outline</span>
+<span class="text-sm font-semibold">Support</span>
+</a>
+<div class="mt-6 p-4 rounded-lg bg-slate-900 text-white text-center">
+<p class="text-[10px] text-slate-400 mb-2 font-medium uppercase tracking-wider">Priority Access</p>
+<button class="w-full py-2 bg-primary text-white rounded-md text-xs font-bold transition-opacity hover:opacity-90">Quick Request</button>
+</div>
+</div>
+</aside>
+<!-- Main Workspace -->
+<main class="ml-64 pt-24 px-12 pb-12 max-w-6xl mx-auto">
+<header class="mb-10 flex justify-between items-end">
+<div>
+<h2 class="text-4xl font-black tracking-tight text-primary mb-3">Request Access</h2>
+<p class="text-slate-500 max-w-xl text-md leading-relaxed">Provision secure identities across enterprise infrastructure. Select roles and provide context for approval.</p>
+</div>
+<!-- Simplified Progress Bar -->
+<div class="flex items-center gap-4 bg-slate-100 p-1.5 rounded-full border border-slate-200">
+<div class="flex items-center gap-2 px-4 py-1.5 bg-white rounded-full shadow-sm">
+<span class="w-5 h-5 rounded-full bg-primary text-white flex items-center justify-center text-[10px] font-bold">1</span>
+<span class="text-xs font-bold text-primary">Selection</span>
+</div>
+<div class="flex items-center gap-2 px-4 py-1.5">
+<span class="w-5 h-5 rounded-full bg-slate-300 text-slate-600 flex items-center justify-center text-[10px] font-bold">2</span>
+<span class="text-xs font-bold text-slate-400">Context</span>
+</div>
+</div>
+</header>
+<div class="grid grid-cols-12 gap-10">
+<!-- Main Form Column -->
+<div class="col-span-12 lg:col-span-8 space-y-12">
+<!-- Section 1: Simplified Selection -->
+<section>
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-sm font-bold uppercase tracking-widest text-slate-400 flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                        Environments &amp; Roles
+                    </h3>
+<button class="text-xs font-bold text-primary hover:underline">Select All</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Simplified Card 1 -->
+<label class="group relative flex flex-col p-5 rounded-lg border-2 border-slate-200 bg-white hover:border-primary transition-all cursor-pointer">
+<input class="absolute top-4 right-4 rounded border-slate-300 text-primary focus:ring-primary w-5 h-5" type="checkbox"/>
+<span class="material-symbols-outlined text-primary mb-3" data-icon="dns">dns</span>
+<h4 class="font-bold text-primary mb-1">Production Infrastructure</h4>
+<p class="text-xs text-slate-500 mb-4 leading-relaxed">Full read/write access to production cluster nodes and database schemas.</p>
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded-md bg-red-50 text-red-700 text-[10px] font-bold">HIGH SENSITIVITY</span>
+</div>
+</label>
+<!-- Simplified Card 2 -->
+<label class="group relative flex flex-col p-5 rounded-lg border-2 border-slate-200 bg-white hover:border-primary transition-all cursor-pointer">
+<input class="absolute top-4 right-4 rounded border-slate-300 text-primary focus:ring-primary w-5 h-5" type="checkbox"/>
+<span class="material-symbols-outlined text-primary mb-3" data-icon="query_stats">query_stats</span>
+<h4 class="font-bold text-primary mb-1">Data Analytics Suite</h4>
+<p class="text-xs text-slate-500 mb-4 leading-relaxed">Access to BigQuery datasets, Looker dashboards, and raw telemetry logs.</p>
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-bold">STANDARD</span>
+</div>
+</label>
+<!-- Simplified Card 3 -->
+<label class="group relative flex flex-col p-5 rounded-lg border-2 border-slate-200 bg-white hover:border-primary transition-all cursor-pointer">
+<input class="absolute top-4 right-4 rounded border-slate-300 text-primary focus:ring-primary w-5 h-5" type="checkbox"/>
+<span class="material-symbols-outlined text-primary mb-3" data-icon="terminal">terminal</span>
+<h4 class="font-bold text-primary mb-1">CI/CD Pipeline Manager</h4>
+<p class="text-xs text-slate-500 mb-4 leading-relaxed">Elevated permissions to modify build actions and deployment secrets.</p>
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded-md bg-red-50 text-red-700 text-[10px] font-bold">CRITICAL</span>
+</div>
+</label>
+<!-- Simplified Card 4 -->
+<label class="group relative flex flex-col p-5 rounded-lg border-2 border-slate-200 bg-white hover:border-primary transition-all cursor-pointer">
+<input class="absolute top-4 right-4 rounded border-slate-300 text-primary focus:ring-primary w-5 h-5" type="checkbox"/>
+<span class="material-symbols-outlined text-primary mb-3" data-icon="support_agent">support_agent</span>
+<h4 class="font-bold text-primary mb-1">Customer Support Read</h4>
+<p class="text-xs text-slate-500 mb-4 leading-relaxed">Read-only access to customer PII for ticket resolution purposes.</p>
+<div class="flex gap-2">
+<span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-bold">STANDARD</span>
+</div>
+</label>
+</div>
+</section>
+<!-- Section 2: Justification -->
+<section class="space-y-6">
+<h3 class="text-sm font-bold uppercase tracking-widest text-slate-400 flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                    Contextual Justification
+                </h3>
+<div class="space-y-4">
+<div class="space-y-2">
+<label class="text-xs font-bold text-slate-700 uppercase tracking-tight">Ticket Reference</label>
+<input class="w-full bg-slate-50 border border-slate-200 rounded-md p-3 text-sm focus:bg-white focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none transition-all" placeholder="e.g. Jira-4429: Migration Phase 2" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-slate-700 uppercase tracking-tight">Business Justification</label>
+<textarea class="w-full bg-slate-50 border border-slate-200 rounded-md p-3 text-sm focus:bg-white focus:ring-2 focus:ring-primary/10 focus:border-primary outline-none transition-all" placeholder="Explain the operational necessity for this request..." rows="3"></textarea>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-primary/5 rounded-lg border border-primary/10">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="timer">timer</span>
+<p class="text-xs font-medium text-primary/80">Default access duration is 24 hours.</p>
+</div>
+<button class="text-xs font-bold text-primary hover:underline">Request Permanent Access</button>
+</div>
+</section>
+<div class="pt-6 border-t border-slate-100">
+<button class="w-full py-4 bg-primary text-white rounded-md font-bold text-lg hover:bg-black transition-all flex items-center justify-center gap-3 shadow-lg shadow-primary/20">
+                    Submit Access Request
+                    <span class="material-symbols-outlined" data-icon="send">send</span>
+</button>
+</div>
+</div>
+<!-- Activity Column -->
+<div class="col-span-12 lg:col-span-4">
+<div class="bg-white border border-slate-200 rounded-xl p-6 sticky top-24">
+<h3 class="text-sm font-bold text-primary mb-6 flex items-center justify-between">
+                    RECENT ACTIVITY
+                    <span class="material-symbols-outlined text-slate-400 text-lg cursor-pointer">more_horiz</span>
+</h3>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="mt-1 w-2 h-2 rounded-full bg-orange-500 shrink-0"></div>
+<div>
+<div class="flex justify-between items-center mb-0.5">
+<p class="text-xs font-bold text-primary">AWS Console Admin</p>
+<span class="text-[10px] text-slate-400">2m ago</span>
+</div>
+<p class="text-[11px] text-slate-500">Pending Sarah J.'s approval</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="mt-1 w-2 h-2 rounded-full bg-green-500 shrink-0"></div>
+<div>
+<div class="flex justify-between items-center mb-0.5">
+<p class="text-xs font-bold text-primary">Staging DB Access</p>
+<span class="text-[10px] text-slate-400">4h ago</span>
+</div>
+<p class="text-[11px] text-slate-500 text-green-600 font-medium">Approved and provisioned</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="mt-1 w-2 h-2 rounded-full bg-red-500 shrink-0"></div>
+<div>
+<div class="flex justify-between items-center mb-0.5">
+<p class="text-xs font-bold text-primary">Root Production SSH</p>
+<span class="text-[10px] text-slate-400">Yesterday</span>
+</div>
+<p class="text-[11px] text-slate-500">Denied: Over-privileged</p>
+</div>
+</div>
+</div>
+<div class="mt-10 pt-6 border-t border-slate-100">
+<div class="flex items-center justify-between mb-3">
+<p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Security Posture</p>
+<span class="text-[10px] font-black text-green-700 bg-green-50 px-2 py-0.5 rounded">OPTIMAL</span>
+</div>
+<div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[85%]"></div>
+</div>
+<p class="text-[10px] text-slate-400 mt-2 font-medium">85% compliance with Least Privilege.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>
