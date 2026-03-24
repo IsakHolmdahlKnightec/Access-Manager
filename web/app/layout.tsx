@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "Access Manager",
@@ -15,10 +16,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased min-h-screen bg-surface text-on-surface font-sans">
-        <Header />
-        <main className="flex-1">
-          {children}
-        </main>
+        <Providers>
+          <Header />
+          <main className="flex-1">
+            {children}
+          </main>
+        </Providers>
       </body>
     </html>
   );

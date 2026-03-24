@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { User, Settings, LogOut, ChevronDown } from "lucide-react"
+import { useSession, signOut } from "next-auth/react"
 
 import { cn } from "@/lib/utils"
 import {
@@ -12,18 +13,19 @@ import {
 } from "@/components/ui/select"
 
 export interface UserNavProps extends React.HTMLAttributes<HTMLDivElement> {
-  user?: {
-    name: string
-    email: string
-    avatar?: string
-  }
   onProfile?: () => void
   onSettings?: () => void
-  onLogout?: () => void
 }
 
 const UserNav = React.forwardRef<HTMLDivElement, UserNavProps>(
-  ({ className, user, onProfile, onSettings, onLogout, ...props }, ref) => {
+  ({ className, onProfile, onSettings, ...props }, ref) => {
+    const { data: session, status } = useSession()
+    const user = session?.user
+
+    const handleLogout = async () => {
+      await signOut({ callbackUrl: "/login" })
+    }
+
     const handleValueChange = (value: string | null) => {
       if (!value) return
       switch (value) {
@@ -34,9 +36,31 @@ const UserNav = React.forwardRef<HTMLDivElement, UserNavProps>(
           onSettings?.()
           break
         case "logout":
-          onLogout?.()
+          handleLogout()
           break
       }
+    }
+
+    // Get user initials
+    const getInitials = (name: string | null | undefined) => {
+      if (!name) return "U"
+      return name.charAt(0).toUpperCase()
+    }
+
+    if (status === "loading") {
+      return (
+        <div ref={ref} className={cn("flex items-center gap-2", className)} {...props}>
+          <div className="h-8 w-8 rounded-full bg-surface-container animate-pulse" />
+          <div className="hidden md:block space-y-1">
+            <div className="h-4 w-20 bg-surface-container rounded animate-pulse" />
+            <div className="h-3 w-24 bg-surface-container rounded animate-pulse" />
+          </div>
+        </div>
+      )
+    }
+
+    if (!user) {
+      return null
     }
 
     return (
@@ -44,14 +68,14 @@ const UserNav = React.forwardRef<HTMLDivElement, UserNavProps>(
         <Select value="" onValueChange={handleValueChange}>
           <SelectTrigger className="w-auto border-0 bg-transparent hover:bg-surface-container gap-2 px-2">
             <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-medium">
-                {user?.name?.charAt(0) || "U"}
+              <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-on-primary text-sm font-medium">
+                {getInitials(user.name)}
               </div>
               <div className="hidden md:block text-left">
-                <p className="text-sm font-medium">{user?.name || "User"}</p>
-                <p className="text-xs text-muted-foreground">{user?.email || ""}</p>
+                <p className="text-sm font-medium">{user.name || user.email}</p>
+                <p className="text-xs text-on-surface-variant">{user.email}</p>
               </div>
-              <ChevronDown className="h-4 w-4 text-muted-foreground" />
+              <ChevronDown className="h-4 w-4 text-on-surface-variant" />
             </div>
           </SelectTrigger>
           <SelectContent className="w-48">
