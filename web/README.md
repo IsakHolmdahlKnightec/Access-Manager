@@ -153,6 +153,93 @@ terraform apply
 - Amplify App
 - IAM Roles
 
+## User Management
+
+### Admin-Only User Creation
+
+This application uses **admin-only user creation** for enhanced security. Self-registration is disabled by default, meaning users cannot sign up on their own. Administrators must create all users manually.
+
+#### Creating Admin Users via AWS CLI
+
+After deploying the infrastructure with `allow_admin_create_user_only = true`, use the following AWS CLI commands to create users:
+
+**1. Create a user with email and temporary password:**
+
+```bash
+aws cognito-idp admin-create-user \
+  --user-pool-id <USER_POOL_ID> \
+  --username <user-email@example.com> \
+  --user-attributes Name=email,Value=<user-email@example.com> Name=email_verified,Value=true Name=name,Value="<User Name>" \
+  --temporary-password <TemporaryPassword123!> \
+  --message-action SUPPRESS
+```
+
+**Example:**
+
+```bash
+aws cognito-idp admin-create-user \
+  --user-pool-id eu-north-1_g3ouwfuXS \
+  --username admin@example.com \
+  --user-attributes Name=email,Value=admin@example.com Name=email_verified,Value=true Name=name,Value="Admin User" \
+  --temporary-password TempPass123! \
+  --message-action SUPPRESS
+```
+
+**2. Enable the user (if needed):**
+
+```bash
+aws cognito-idp admin-enable-user \
+  --user-pool-id <USER_POOL_ID> \
+  --username <user-email@example.com>
+```
+
+**3. List all users in the User Pool:**
+
+```bash
+aws cognito-idp list-users \
+  --user-pool-id <USER_POOL_ID>
+```
+
+**4. Delete a user (if needed):**
+
+```bash
+aws cognito-idp admin-delete-user \
+  --user-pool-id <USER_POOL_ID> \
+  --username <user-email@example.com>
+```
+
+#### Terraform Configuration
+
+The `allow_admin_create_user_only` setting is configured in `infrastructure/modules/cognito/main.tf`:
+
+```hcl
+admin_create_user_config {
+  allow_admin_create_user_only = true
+}
+```
+
+To apply changes after modifying this setting:
+
+```bash
+cd infrastructure
+terraform apply
+```
+
+#### First Login Experience
+
+When a new admin-created user logs in for the first time:
+1. User enters their email and temporary password
+2. Cognito detects the temporary password and requires a password change
+3. User sets a new permanent password meeting the password policy requirements
+4. After password change, the user is authenticated and redirected to the dashboard
+
+#### Security Notes
+
+- Temporary passwords should be communicated securely to users
+- Users are required to change their password on first login
+- Self-registration attempts will fail with an appropriate error message
+- All user creation is logged in CloudWatch for audit purposes
+
 ## Adding Protected Routes
 
 By default, all routes are protected except:

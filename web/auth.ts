@@ -1,6 +1,6 @@
 import NextAuth from "next-auth"
 import Cognito from "next-auth/providers/cognito"
-import type { NextAuthConfig, Session, User } from "next-auth"
+import type { NextAuthConfig, Session } from "next-auth"
 import type { JWT } from "next-auth/jwt"
 
 // Extend the built-in session types
@@ -112,8 +112,8 @@ const authConfig: NextAuthConfig = {
       if (token) {
         session.user = {
           ...session.user,
-          id: token.user?.id!,
-          email: token.user?.email!,
+          id: token.user?.id ?? "",
+          email: token.user?.email ?? "",
           name: token.user?.name,
         }
         session.accessToken = token.accessToken

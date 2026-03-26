@@ -6,7 +6,7 @@ resource "aws_cognito_user_pool" "main" {
   name = var.user_pool_name
 
   # Use email as username alias
-  alias_attributes = ["email"]
+  alias_attributes         = ["email"]
   auto_verified_attributes = ["email"]
 
   # Email configuration
@@ -25,7 +25,7 @@ resource "aws_cognito_user_pool" "main" {
 
   # MFA configuration
   mfa_configuration = "OPTIONAL"
-  
+
   software_token_mfa_configuration {
     enabled = true
   }
@@ -71,8 +71,9 @@ resource "aws_cognito_user_pool" "main" {
   }
 
   # Admin create user configuration
+  # Set to true to disable self-registration and require admin-created users only
   admin_create_user_config {
-    allow_admin_create_user_only = false
+    allow_admin_create_user_only = true
   }
 
   tags = {
@@ -91,7 +92,7 @@ resource "aws_cognito_user_pool_client" "main" {
   user_pool_id = aws_cognito_user_pool.main.id
 
   # Client configuration
-  generate_secret     = false
+  generate_secret = false
   explicit_auth_flows = [
     "ALLOW_USER_SRP_AUTH",
     "ALLOW_REFRESH_TOKEN_AUTH",

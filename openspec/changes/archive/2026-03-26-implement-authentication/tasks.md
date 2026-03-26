@@ -69,13 +69,13 @@
 
 ## 8. Testing and Verification
 
-- [ ] 8.1 Test login flow with valid Cognito credentials
-- [ ] 8.2 Test login failure with invalid credentials shows error
+- [x] 8.1 Test login flow with valid Cognito credentials
+- [x] 8.2 Test login failure with invalid credentials shows error
 - [x] 8.3 Test middleware redirects unauthenticated user from `/` to `/login`
-- [ ] 8.4 Test successful login redirects to originally requested page
-- [ ] 8.5 Test session persists across page navigation
-- [ ] 8.6 Test logout clears session and redirects to login
-- [ ] 8.7 Test token refresh by waiting near token expiry (or manually)
+- [x] 8.4 Test successful login redirects to originally requested page
+- [x] 8.5 Test session persists across page navigation
+- [x] 8.6 Test logout clears session and redirects to login
+- [x] 8.7 Test token refresh by waiting near token expiry (or manually)
 - [x] 8.8 Test protected route access returns 401/redirect when unauthenticated
 - [x] 8.9 Verify design matches "Digital Vault" aesthetic on all auth pages
 - [x] 8.10 Test responsive design on mobile devices
@@ -109,9 +109,9 @@
 
 ## 12. Admin-Only User Creation
 
-- [ ] 12.1 Update Terraform cognito module to set `allow_admin_create_user_only = true`
-- [ ] 12.2 Run `terraform apply` to deploy the updated configuration
-- [ ] 12.3 Create admin user via AWS CLI with proper attributes
-- [ ] 12.4 Update README with admin user creation instructions
-- [ ] 12.5 Document AWS CLI command examples for creating users
-- [ ] 12.6 Verify self-registration is disabled (attempt should fail)
+- [x] 12.1 Update Terraform cognito module to set `allow_admin_create_user_only = true`
+- [x] 12.2 Run `terraform apply` to deploy the updated configuration
+- [x] 12.3 Create admin user via AWS CLI with proper attributes
+- [x] 12.4 Update README with admin user creation instructions
+- [x] 12.5 Document AWS CLI command examples for creating users
+- [x] 12.6 Verify self-registration is disabled (attempt should fail)
