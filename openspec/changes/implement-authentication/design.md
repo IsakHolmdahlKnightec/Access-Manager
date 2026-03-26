@@ -52,7 +52,7 @@ The application is a "vault with no lock" - beautifully designed but functionall
 - Multi-factor authentication (MFA) in this phase (Cognito supports it, but UI deferred)
 - Social login providers (Google, GitHub) - Cognito supports but not enabling yet
 - Password reset flow UI (Cognito handles this via email)
-- User registration UI (admin-created users for now)
+- User registration UI (admin-created users only)
 - Role-based access control (RBAC) enforcement - identity only, authorization later
 - API route protection beyond session validation
 
@@ -150,6 +150,25 @@ COGNITO_DOMAIN=access-manager.auth.eu-north-1.amazoncognito.com
 - Different environments (dev/staging/prod) can use different Cognito pools
 n- Secrets stay out of code
 - Follows 12-factor app methodology
+
+### Decision 6: Admin-Only User Creation
+
+**Choice:** Configure Cognito User Pool to disable self-registration and enforce admin-only user creation.
+
+**Implementation:**
+- Set `allow_admin_create_user_only = true` in Cognito configuration
+- Administrators create users via AWS Console or AWS CLI
+- Users receive temporary password via email and must change on first login
+
+**Rationale:**
+- Aligns with enterprise security model for access management
+- Prevents unauthorized account creation
+- Administrators have full control over user provisioning
+- Simpler than building custom user management UI for this phase
+
+**Alternatives Considered:**
+- *Self-registration*: Easier for users but creates security risk
+- *Custom admin UI*: Better long-term but adds complexity; deferred to future phase
 
 ## Risks / Trade-offs
 

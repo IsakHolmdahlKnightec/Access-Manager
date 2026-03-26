@@ -42,3 +42,22 @@ The system SHALL read Cognito configuration from environment variables.
 - **AND** it reads `NEXTAUTH_SECRET` for JWT signing
 - **AND** it reads `NEXTAUTH_URL` for callback URL construction
 - **AND** the application fails to start if required variables are missing
+
+### Requirement: Admin-only user creation
+The system SHALL enforce that only administrators can create users via AWS Cognito Console or AWS CLI.
+
+#### Scenario: Cognito configured for admin-only user creation
+- **WHEN** the Cognito User Pool is configured
+- **THEN** self-registration SHALL be disabled
+- **AND** only users created by administrators SHALL be able to sign in
+
+#### Scenario: Admin creates user via CLI
+- **WHEN** an administrator runs the AWS CLI create-user command
+- **THEN** the user SHALL be created in the User Pool
+- **AND** the user SHALL receive a temporary password via email
+- **AND** the user SHALL be required to change password on first sign-in
+
+#### Scenario: Self-registration is rejected
+- **WHEN** a user attempts to self-register via the sign-up API
+- **THEN** the request SHALL be rejected with an error
+- **AND** the error SHALL indicate that admin creation is required

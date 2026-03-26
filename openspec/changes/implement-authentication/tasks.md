@@ -106,3 +106,12 @@
 - [x] 11.3 Document environment variables needed
 - [x] 11.4 Add troubleshooting section for common auth issues
 - [x] 11.5 Document how to add new protected routes
+
+## 12. Admin-Only User Creation
+
+- [ ] 12.1 Update Terraform cognito module to set `allow_admin_create_user_only = true`
+- [ ] 12.2 Run `terraform apply` to deploy the updated configuration
+- [ ] 12.3 Create admin user via AWS CLI with proper attributes
+- [ ] 12.4 Update README with admin user creation instructions
+- [ ] 12.5 Document AWS CLI command examples for creating users
+- [ ] 12.6 Verify self-registration is disabled (attempt should fail)
