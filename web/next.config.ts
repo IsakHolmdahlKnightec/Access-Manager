@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // WEB_COMPUTE platform supports API routes natively
-  // No output: 'export' needed - standard Next.js output works
+  // WEB_COMPUTE platform requires standalone output for Lambda deployment
+  output: "standalone",
   images: {
     unoptimized: true,
   },

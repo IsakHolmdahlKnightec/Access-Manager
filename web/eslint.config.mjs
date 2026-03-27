@@ -17,6 +17,7 @@ const eslintConfig = [
       ".next/**",
       "out/**",
       "build/**",
+      ".amplify-hosting/**",
       "next-env.d.ts",
     ],
   },
