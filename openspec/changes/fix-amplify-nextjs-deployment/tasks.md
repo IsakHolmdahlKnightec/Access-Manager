@@ -54,3 +54,86 @@
 - [ ] 7.6 Test API routes (e.g., `/api/auth/[...nextauth]`)
 - [ ] 7.7 Test authentication flow (Cognito login/logout)
 - [ ] 7.8 Verify static assets load with correct cache headers
+
+## 8. CRITICAL: Fix Terraform - Add Framework Attribute
+
+### ⚠️ ROOT CAUSE FOUND: Missing `framework` attribute in Terraform
+
+**The `aws_amplify_branch` resource MUST have the `framework` attribute set for WEB_COMPUTE to provision Lambda functions!**
+
+### 8.1 Fix Terraform Configuration
+
+- [x] 8.1.1 Add `framework` attribute to aws_amplify_branch resource
+  - File: `infrastructure/modules/amplify/main.tf`
+  - Added: `framework = "Next.js - 15"` to aws_amplify_branch.main
+  - **This is REQUIRED for Lambda functions to be created**
+
+- [ ] 8.1.2 Apply Terraform changes
+  ```bash
+  cd infrastructure
+  terraform plan
+  terraform apply
+  ```
+
+- [ ] 8.1.3 Verify Terraform apply succeeds
+  - Check output shows aws_amplify_branch resource updated
+  - No errors during apply
+
+### 8.2 Verify Lambda Functions Created
+
+- [ ] 8.2.1 Check Lambda functions exist after Terraform apply
+  ```bash
+  aws lambda list-functions --query 'Functions[*].FunctionName'
+  # Should now see a Lambda function for your Amplify app
+  ```
+
+- [ ] 8.2.2 Verify Lambda function naming
+  - Should contain app ID or name
+  - Should be in same region as Amplify app
+
+### 8.3 Trigger Deployment After Infrastructure Fix
+
+- [ ] 8.3.1 Redeploy application
+  - Option A: Push empty commit: `git commit --allow-empty -m "trigger deploy" && git push`
+  - Option B: Click "Redeploy this version" in Amplify Console
+
+- [ ] 8.3.2 Monitor deployment for compute resource creation
+  - Watch for "Creating compute resources..." in build logs
+  - Should see Lambda being invoked
+
+### 8.4 Verify CloudWatch Logs
+
+- [ ] 8.4.1 Check log groups exist
+  ```bash
+  aws logs describe-log-groups --log-group-name-prefix "/aws/lambda"
+  # Should now see log group for your Lambda function
+  ```
+
+- [ ] 8.4.2 Configure 30-day log retention
+  ```bash
+  aws logs put-retention-policy \
+    --log-group-name "/aws/lambda/<function-name>" \
+    --retention-in-days 30
+  ```
+
+- [ ] 8.4.3 Trigger application request and verify logs
+  - Visit deployed URL
+  - Check CloudWatch Logs for entries
+  - Should see Lambda runtime logs + application console output
+
+### 8.5 Document the Fix
+
+- [ ] 8.5.1 Update Terraform documentation with framework requirement
+- [ ] 8.5.2 Add note to AGENTS.md about WEB_COMPUTE requiring framework attribute
+- [ ] 8.5.3 Create troubleshooting guide for future deployments
+
+## Summary
+
+**Root Cause**: The Terraform `aws_amplify_branch` resource was missing the `framework` attribute, which is REQUIRED for AWS Amplify to provision Lambda compute resources when using WEB_COMPUTE platform.
+
+**Fix**: Added `framework = "Next.js - 15"` to the `aws_amplify_branch` resource.
+
+**Impact**: Without this attribute, WEB_COMPUTE deployments create no Lambda functions, resulting in:
+- No CloudWatch log groups
+- No compute resources for API routes
+- Static-only behavior despite WEB_COMPUTE platform setting

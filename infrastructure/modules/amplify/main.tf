@@ -65,6 +65,10 @@ resource "aws_amplify_branch" "main" {
   app_id      = aws_amplify_app.main.id
   branch_name = var.branch_name
 
+  # Framework is REQUIRED for WEB_COMPUTE to provision Lambda functions
+  # Without this, no compute resources are created
+  framework = "Next.js - 15"
+
   # Enable auto-build for the branch
   enable_auto_build = true
 
