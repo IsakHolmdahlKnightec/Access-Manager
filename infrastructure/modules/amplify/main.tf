@@ -41,13 +41,9 @@ resource "aws_amplify_app" "main" {
   # Environment variables
   environment_variables = var.environment_variables
 
-  # SPA routing: serve index.html for client-side navigation
-  # With WEB_COMPUTE, API routes go to Lambda, static pages are served via CDN
-  custom_rule {
-    source = "/<*>"
-    status = "404-200"
-    target = "/index.html"
-  }
+  # SPA routing: With WEB_COMPUTE, all routes are handled by the compute resource
+  # The deploy-manifest.json defines the routing rules
+  # Note: Custom rules for 404 handling should be managed in the application code
 
   tags = {
     Name        = var.app_name
