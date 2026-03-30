@@ -116,7 +116,7 @@ module "amplify" {
     DYNAMODB_USERS_TABLE    = module.dynamodb.users_table_name
     DYNAMODB_SESSIONS_TABLE = module.dynamodb.sessions_table_name
     APP_REGION              = var.aws_region
-    AMPLIFY_MONOREPO_APP_ROOT = "web/"
+    AMPLIFY_MONOREPO_APP_ROOT = "./web"
   }
 }
 

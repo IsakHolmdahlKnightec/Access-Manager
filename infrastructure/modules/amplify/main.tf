@@ -14,8 +14,11 @@ resource "aws_amplify_app" "main" {
   build_spec = <<-EOT
     version: 1
     applications:
-    - appRoot: web
+    - appRoot: ./web
+      framework:
+        name: nextjs-ssr
       frontend:
+        buildpath: ./web
         phases:
           preBuild:
             commands:
@@ -65,6 +68,8 @@ resource "aws_amplify_app" "main" {
 resource "aws_amplify_branch" "main" {
   app_id      = aws_amplify_app.main.id
   branch_name = "main"
+  framework   = "Next.js - SSR"
+  stage       = "PRODUCTION"
 
   # Enable auto-build for the branch
   enable_auto_build = true
