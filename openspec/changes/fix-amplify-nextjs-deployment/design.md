@@ -169,6 +169,100 @@ If deployment fails:
 5. ✅ API routes respond correctly
 6. ✅ Authentication flow works (Cognito callbacks)
 
+### Decision 6: CloudWatch Logging Configuration
+
+**Choice**: Enable CloudWatch Logs for the Amplify WEB_COMPUTE deployment with 30-day retention.
+
+**Rationale**:
+- WEB_COMPUTE uses Lambda functions which automatically send logs to CloudWatch
+- CloudWatch Logs provides essential observability for debugging and monitoring
+- 30-day retention balances cost with operational needs
+- Logs include both Lambda runtime and application stdout/stderr
+- CloudWatch Logs Insights enables powerful log querying
+
+**Implementation**:
+- CloudWatch logging is automatically enabled for Amplify WEB_COMPUTE
+- Log groups are created when the first log entry is written (not at deployment time)
+- **IMPORTANT**: Log groups for WEB_COMPUTE appear under `/aws/lambda/` prefix, NOT `/aws/amplify/`
+- Lambda function names follow pattern: `<app-id>-<branch>-<random>` or similar
+- Application should use structured logging (JSON) for better queryability
+- Retention can be configured via AWS Console or CLI
+
+**Finding Log Groups**:
+1. Ensure deployment completed successfully in Amplify Console
+2. Verify platform is set to WEB_COMPUTE (not WEB_DYNAMIC or WEB_STATIC)
+3. Verify Lambda function actually exists: `aws lambda list-functions`
+4. Trigger at least one request to the application (logs are created lazily)
+5. **Search under `/aws/lambda/`** - This is where WEB_COMPUTE Lambda logs go
+6. If still no logs, manually invoke Lambda to force log group creation
+
+**Note on Log Group Location**:
+- WEB_STATIC: Logs go to S3/CloudFront (different mechanism)
+- WEB_DYNAMIC: Legacy platform, logs may vary
+- **WEB_COMPUTE**: Logs ALWAYS go to `/aws/lambda/{function-name}`
+
+**Alternatives Considered**:
+- Third-party logging (Datadog, etc.): Rejected - adds cost and complexity
+- Custom log shipping: Rejected - unnecessary with built-in CloudWatch integration
+- No logging: Rejected - unacceptable for production operations
+
+### Decision 7: Application Logging Strategy
+
+**Choice**: Use console methods (console.log, console.error) which are captured by CloudWatch.
+
+**Rationale**:
+- Next.js standalone server stdout/stderr is automatically captured by Lambda
+- No additional logging library needed for basic needs
+- CloudWatch Logs Insights can parse and query logs effectively
+- Structured JSON logging can be added later if needed
+
+**Log Levels**:
+- `console.log` - General information, request handling
+- `console.warn` - Warnings, non-critical issues
+- `console.error` - Errors, exceptions, authentication failures
+
+**Alternatives Considered**:
+- Winston/Pino logging libraries: Could be added later for structured logging
+- AWS X-Ray: Could be added for distributed tracing
+
+## Risks / Trade-offs
+
+### Risk: CloudWatch Logs Costs
+**Risk**: CloudWatch Logs can become expensive with high log volume.
+→ **Mitigation**: 30-day retention limit, monitor log volume, consider log sampling for high-traffic scenarios.
+
+### Risk: Log Group Retention Misconfiguration
+**Risk**: Logs may be retained longer than necessary or deleted too quickly.
+→ **Mitigation**: Standardize on 30-day retention, document change process for retention adjustments.
+
+### Risk: PII in Logs
+**Risk**: Sensitive user data may be accidentally logged to CloudWatch.
+→ **Mitigation**: Code review process for logging statements, avoid logging request bodies with credentials or tokens.
+
+### Risk: Log Groups Not Appearing
+**Risk**: CloudWatch log groups may not be found after deployment.
+→ **Mitigation**: 
+- Verify deployment succeeded in Amplify Console
+- Confirm platform is WEB_COMPUTE (check app settings)
+- Trigger at least one request to the app (logs are created on first write, not at deploy)
+- Search both `/aws/lambda/` and `/aws/amplify/` prefixes
+- Wait 2-3 minutes after first request for logs to propagate
+
+### Risk: No Lambda Functions Created (CRITICAL)
+**Risk**: WEB_COMPUTE platform may not actually create Lambda infrastructure.
+→ **Mitigation**:
+- **CRITICAL**: Verify Lambda functions actually exist: `aws lambda list-functions`
+- **MOST COMMON CAUSE**: Missing `framework` attribute in branch configuration
+  - Terraform: Must set `framework = "Next.js - 15"` in `aws_amplify_branch`
+  - AWS Console: Must set Framework in branch settings
+  - Without this, WEB_COMPUTE creates NO Lambda functions!
+- If no Lambda exists, check:
+  1. `framework` attribute is set on the branch
+  2. Build logs for "deploy-manifest.json" errors
+  3. `baseDirectory` in amplify.yml points to correct location
+  4. Platform is explicitly set: `aws amplify update-app --platform WEB_COMPUTE`
+- If still failing, escalate to AWS Support or consider alternative deployment
+
 ## Open Questions
 
 None at this time. All technical decisions have been made and implemented.

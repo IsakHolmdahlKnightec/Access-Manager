@@ -28,10 +28,17 @@ The deployment to AWS Amplify is failing with the error: "Failed to find the dep
 - Copy `.next/static` to both compute (fallback) and static (CDN) directories
 - Copy `public/` folder contents to both locations
 
+### CloudWatch Logging
+- Configure CloudWatch Logs for WEB_COMPUTE Lambda functions
+- Set log retention to 30 days for cost optimization
+- Enable CloudWatch Logs Insights for log querying and analysis
+- Document logging conventions for application code
+
 ## Capabilities
 
 ### New Capabilities
 - `amplify-web-compute-deployment`: Configuration and scripts for deploying Next.js 15 applications with API routes to AWS Amplify WEB_COMPUTE platform
+- `cloudwatch-logging`: CloudWatch Logs integration for application observability and monitoring
 
 ### Modified Capabilities
 - None (this is a configuration fix, not a requirement change)
@@ -71,7 +78,23 @@ The deployment to AWS Amplify is failing with the error: "Failed to find the dep
 ### API Routes
 All existing API routes (e.g., `/api/auth/[...nextauth]`) will continue to work through the compute function as before.
 
+### CloudWatch Logging
+- Log groups are created under `/aws/lambda/{function-name}` (WEB_COMPUTE uses Lambda)
+- Application logs (stdout/stderr) are automatically captured by CloudWatch
+- Log groups are created on first Lambda invocation (not at deployment time)
+- 30-day log retention provides balance between cost and operational needs
+- CloudWatch Logs Insights enables powerful querying of application logs
+
+### Infrastructure Verification
+- **CRITICAL**: Lambda functions MUST exist for WEB_COMPUTE to function
+- **ROOT CAUSE DISCOVERED**: Terraform missing `framework` attribute in `aws_amplify_branch`
+  - Without `framework = "Next.js - 15"`, no Lambda functions are provisioned
+  - This is a silent failure - deployment appears successful but has no compute
+- Fix: Add `framework` attribute to Terraform aws_amplify_branch resource
+- Requires Terraform apply and redeployment
+
 ### Risk Assessment
 - **Low risk**: These are configuration fixes that align with documented best practices
 - **Breaking**: None - all changes are backward compatible
 - **Rollback**: Easy - can revert to previous commit if issues arise
+- **CloudWatch Costs**: Monitor log volume to manage CloudWatch Logs costs
