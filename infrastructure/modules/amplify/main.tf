@@ -63,11 +63,7 @@ resource "aws_amplify_app" "main" {
 
 resource "aws_amplify_branch" "main" {
   app_id      = aws_amplify_app.main.id
-  branch_name = var.branch_name
-
-  # Framework is REQUIRED for WEB_COMPUTE to provision Lambda functions
-  # Without this, no compute resources are created
-  framework = "Next.js - 15"
+  branch_name = "main"
 
   # Enable auto-build for the branch
   enable_auto_build = true
@@ -76,12 +72,28 @@ resource "aws_amplify_branch" "main" {
   enable_basic_auth = var.enable_basic_auth
 
   tags = {
-    Name        = "${var.app_name}-${var.branch_name}"
+    Name        = "${var.app_name}-main"
     Application = var.project_name
     ManagedBy   = "Terraform"
   }
 }
 
+resource "aws_amplify_branch" "dev" {
+  app_id      = aws_amplify_app.main.id
+  branch_name = "dev"
+
+  # Enable auto-build for the branch
+  enable_auto_build = true
+
+  # Basic authentication (if enabled)
+  enable_basic_auth = var.enable_basic_auth
+
+  tags = {
+    Name        = "${var.app_name}-dev"
+    Application = var.project_name
+    ManagedBy   = "Terraform"
+  }
+}
 # =============================================================================
 # Amplify Domain Association (Optional)
 # =============================================================================
