@@ -22,15 +22,15 @@ resource "aws_amplify_app" "main" {
               - npm ci
           build:
             commands:
-              - npm run build --prefix=web
+              - npm run build 
         artifacts:
           baseDirectory: .next
           files:
             - '**/*'
         cache:
           paths:
-            - web/node_modules/**/*
-            - web/.next/cache/**/*
+            - node_modules/**/*
+            - .next/cache/**/*
   EOT
 
   # Enable branch auto-build
