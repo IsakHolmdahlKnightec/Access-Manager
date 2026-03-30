@@ -13,23 +13,24 @@ resource "aws_amplify_app" "main" {
   # Build specification
   build_spec = <<-EOT
     version: 1
-    frontend:
-      phases:
-        preBuild:
-          commands:
-            - cd web
-            - npm ci
-        build:
-          commands:
-            - npm run build
-      artifacts:
-        baseDirectory: web/.amplify-hosting
-        files:
-          - '**/*'
-      cache:
-        paths:
-          - web/node_modules/**/*
-          - web/.next/cache/**/*
+    applications:
+    - appRoot: web
+      frontend:
+        phases:
+          preBuild:
+            commands:
+              - npm ci
+          build:
+            commands:
+              - npm run build --prefix=web
+        artifacts:
+          baseDirectory: .next
+          files:
+            - '**/*'
+        cache:
+          paths:
+            - web/node_modules/**/*
+            - web/.next/cache/**/*
   EOT
 
   # Enable branch auto-build
