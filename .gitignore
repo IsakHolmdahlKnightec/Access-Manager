@@ -58,4 +58,18 @@ infrastructure/.terraform.lock.hcl
 # Lambda
 # =============================================================================
 
-lambda/node_modules/*
+# Node modules (dependencies installed during build)
+lambda/node_modules/
+lambda/layer/node_modules/
+
+# Compiled TypeScript output (generated during build)
+lambda/dist/
+
+# Lambda layer directory (contains node_modules, generated during build)
+lambda/layer/
+
+# Package manager files
+lambda/package-lock.json
+
+# Note: lambda/*.zip files are intentionally NOT ignored
+# These are the deployment packages that should be committed
