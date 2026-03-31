@@ -11,6 +11,7 @@ declare module "next-auth" {
       email: string
       name?: string | null
       image?: string | null
+      role?: string
     }
     accessToken?: string
     error?: string
@@ -27,6 +28,7 @@ declare module "next-auth/jwt" {
       id: string
       email: string
       name?: string | null
+      role?: string
     }
     error?: string
   }
@@ -83,9 +85,14 @@ const authConfig: NextAuthConfig = {
     maxAge: 24 * 60 * 60, // 24 hours
   },
   callbacks: {
-    async jwt({ token, account, user }): Promise<JWT> {
+    async jwt({ token, account, user, profile }): Promise<JWT> {
       // Initial sign in
       if (account && user) {
+        // Extract role from Cognito custom attribute
+        const cognitoProfile = profile as { 
+          "custom:access-manager-role"?: string 
+        } | undefined
+        
         return {
           ...token,
           accessToken: account.access_token,
@@ -96,6 +103,7 @@ const authConfig: NextAuthConfig = {
             id: user.id || "",
             email: user.email || "",
             name: user.name,
+            role: cognitoProfile?.["custom:access-manager-role"],
           },
         }
       }
@@ -115,6 +123,7 @@ const authConfig: NextAuthConfig = {
           id: token.user?.id ?? "",
           email: token.user?.email ?? "",
           name: token.user?.name,
+          role: token.user?.role,
         }
         session.accessToken = token.accessToken
         session.error = token.error

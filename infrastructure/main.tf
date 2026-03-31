@@ -50,17 +50,31 @@ module "dynamodb" {
 }
 
 # =============================================================================
+# DynamoDB Access Module (Single-Table Design for Access Management)
+# =============================================================================
+
+module "dynamodb_access" {
+  source = "./modules/dynamodb-access"
+
+  project_name                  = var.project_name
+  access_data_table_name        = var.dynamodb_table_name_access_data
+  users_table_name              = var.dynamodb_table_name_users
+  enable_point_in_time_recovery = var.enable_dynamodb_point_in_time_recovery
+}
+
+# =============================================================================
 # IAM Module
 # =============================================================================
 
 module "iam" {
   source = "./modules/iam"
 
-  project_name                = var.project_name
-  dynamodb_users_table_arn    = module.dynamodb.users_table_arn
-  dynamodb_sessions_table_arn = module.dynamodb.sessions_table_arn
-  secrets_arns                = values(module.secrets.secret_arns)
-  parameter_store_prefix      = var.parameter_store_prefix
+  project_name                   = var.project_name
+  dynamodb_users_table_arn       = module.dynamodb.users_table_arn
+  dynamodb_sessions_table_arn    = module.dynamodb.sessions_table_arn
+  dynamodb_access_data_table_arn = module.dynamodb_access.access_data_table_arn
+  secrets_arns                   = values(module.secrets.secret_arns)
+  parameter_store_prefix         = var.parameter_store_prefix
 }
 
 # =============================================================================
@@ -110,13 +124,14 @@ module "amplify" {
   service_role_arn    = module.iam.amplify_execution_role_arn
 
   environment_variables = {
-    COGNITO_USER_POOL_ID    = module.cognito.user_pool_id
-    COGNITO_APP_CLIENT_ID   = module.cognito.app_client_id
-    COGNITO_DOMAIN          = module.cognito.cognito_domain
-    DYNAMODB_USERS_TABLE    = module.dynamodb.users_table_name
-    DYNAMODB_SESSIONS_TABLE = module.dynamodb.sessions_table_name
-    APP_REGION              = var.aws_region
-    AMPLIFY_MONOREPO_APP_ROOT = "./web"
+    COGNITO_USER_POOL_ID      = module.cognito.user_pool_id
+    COGNITO_APP_CLIENT_ID     = module.cognito.app_client_id
+    COGNITO_DOMAIN            = module.cognito.cognito_domain
+    DYNAMODB_USERS_TABLE      = module.dynamodb.users_table_name
+    DYNAMODB_SESSIONS_TABLE   = module.dynamodb.sessions_table_name
+    DYNAMODB_ACCESS_TABLE     = module.dynamodb_access.access_data_table_name
+    LAMBDA_EXECUTION_ROLE_ARN = module.iam.lambda_execution_role_arn
+    APP_REGION                = var.aws_region
   }
 }
 

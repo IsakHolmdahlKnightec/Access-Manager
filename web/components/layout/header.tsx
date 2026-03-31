@@ -1,12 +1,20 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link";
-import { Shield } from "lucide-react";
-import { useSession } from "next-auth/react";
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { Shield, CheckCircle } from "lucide-react"
+import { useSession } from "next-auth/react"
 
 import { cn } from "@/lib/utils"
-import { UserNav } from "./user-nav";
+import { UserNav } from "./user-nav"
+import { NotificationBell } from "@/components/access"
+import { NotificationDropdown } from "@/components/access"
+
+// Check if user has admin role
+const isAdminUser = (session: { user?: { role?: string } } | null): boolean => {
+  return session?.user?.role === "admin"
+}
 
 export interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
   logo?: React.ReactNode
@@ -16,8 +24,11 @@ export interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
 
 const Header = React.forwardRef<HTMLElement, HeaderProps>(
   ({ className, logo, navigation, actions, children, ...props }, ref) => {
-    const { status } = useSession();
-    const isAuthenticated = status === "authenticated";
+    const { status, data: session } = useSession()
+    const isAuthenticated = status === "authenticated"
+    const isAdmin = isAdminUser(session)
+    const [showNotifications, setShowNotifications] = React.useState(false)
+    const pathname = usePathname()
 
     return (
       <header
@@ -46,29 +57,62 @@ const Header = React.forwardRef<HTMLElement, HeaderProps>(
                   navigation || (
                     <nav className="flex items-center gap-1 sm:gap-2">
                       <Link
-                        href="/"
-                        className="px-3 py-2 text-body-md font-medium text-on-surface-variant rounded-md transition-all duration-200 hover:bg-surface-container hover:text-on-surface"
+                        href="/access"
+                        className={cn(
+                          "px-3 py-2 text-body-md font-medium rounded-md transition-all duration-200",
+                          pathname === "/access"
+                            ? "bg-surface-container text-on-surface"
+                            : "text-on-surface-variant hover:bg-surface-container hover:text-on-surface"
+                        )}
                       >
-                        Home
+                        Access Catalog
                       </Link>
                       <Link
-                        href="#features"
-                        className="px-3 py-2 text-body-md font-medium text-on-surface-variant rounded-md transition-all duration-200 hover:bg-surface-container hover:text-on-surface"
+                        href="/requests"
+                        className={cn(
+                          "px-3 py-2 text-body-md font-medium rounded-md transition-all duration-200",
+                          pathname === "/requests"
+                            ? "bg-surface-container text-on-surface"
+                            : "text-on-surface-variant hover:bg-surface-container hover:text-on-surface"
+                        )}
                       >
-                        Features
+                        My Requests
                       </Link>
+                      {isAdmin && (
+                        <Link
+                          href="/admin/approvals"
+                          className={cn(
+                            "px-3 py-2 text-body-md font-medium rounded-md transition-all duration-200 flex items-center gap-2",
+                            pathname.startsWith("/admin")
+                              ? "bg-surface-container text-on-surface"
+                              : "text-on-surface-variant hover:bg-surface-container hover:text-on-surface"
+                          )}
+                        >
+                          <CheckCircle className="w-4 h-4" />
+                          <span>Approvals</span>
+                        </Link>
+                      )}
                     </nav>
                   )
                 )}
               </div>
               <div className="flex items-center gap-4">
+                {isAuthenticated && (
+                  <div className="relative">
+                    <NotificationBell onClick={() => setShowNotifications(!showNotifications)} />
+                    <NotificationDropdown
+                      isOpen={showNotifications}
+                      onClose={() => setShowNotifications(false)}
+                    />
+                  </div>
+                )}
                 {actions || (isAuthenticated && <UserNav />)}
               </div>
             </div>
           </div>
         )}
       </header>
-    );
+    )
   }
 )
 

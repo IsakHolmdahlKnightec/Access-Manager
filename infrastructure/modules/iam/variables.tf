@@ -17,6 +17,11 @@ variable "dynamodb_sessions_table_arn" {
   type        = string
 }
 
+variable "dynamodb_access_data_table_arn" {
+  description = "ARN of the DynamoDB access-manager-data table"
+  type        = string
+}
+
 variable "secrets_arns" {
   description = "List of Secrets Manager secret ARNs"
   type        = list(string)

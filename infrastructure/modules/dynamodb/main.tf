@@ -2,6 +2,13 @@
 # Users Table
 # =============================================================================
 
+# User Entity Schema (single-table design):
+# PK: userId, SK: "PROFILE"
+# Attributes: userId, email, teamId, projectId, role, createdAt, updatedAt
+#
+# Role values: "user" | "admin"
+# teamId and projectId reference Team and Project entities in access-manager-data table
+
 resource "aws_dynamodb_table" "users" {
   name         = var.users_table_name
   billing_mode = "PAY_PER_REQUEST"

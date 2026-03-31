@@ -118,6 +118,12 @@ variable "dynamodb_table_name_sessions" {
   default     = "access-manager-sessions"
 }
 
+variable "dynamodb_table_name_access_data" {
+  description = "Name for the access-manager-data DynamoDB table"
+  type        = string
+  default     = "access-manager-data"
+}
+
 variable "enable_dynamodb_point_in_time_recovery" {
   description = "Enable point-in-time recovery for DynamoDB tables"
   type        = bool
