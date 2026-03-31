@@ -42,14 +42,14 @@
 
 ## 5. API Gateway Setup
 
-- [ ] 5.1 Create API Gateway HTTP API (v2)
-- [ ] 5.2 Configure Cognito authorizer
-- [ ] 5.3 Add routes for access endpoints (GET /accesses, GET /accesses/:id)
-- [ ] 5.4 Add routes for request endpoints (GET /requests, POST /requests, GET /requests/:id, PATCH /requests/:id)
-- [ ] 5.5 Add routes for approval endpoints (POST /requests/:id/approve, POST /requests/:id/decline)
-- [ ] 5.6 Add routes for notification endpoints (GET /notifications, PATCH /notifications/:id/read)
-- [ ] 5.7 Add routes for admin endpoints (GET /admin/pending, GET /admin/requests)
-- [ ] 5.8 Configure CORS settings
+- [x] 5.1 Create API Gateway HTTP API (v2)
+- [x] 5.2 Configure Cognito authorizer
+- [x] 5.3 Add routes for access endpoints (GET /accesses, GET /accesses/:id)
+- [x] 5.4 Add routes for request endpoints (GET /requests, POST /requests, GET /requests/:id, PATCH /requests/:id)
+- [x] 5.5 Add routes for approval endpoints (POST /requests/:id/approve, POST /requests/:id/decline)
+- [x] 5.6 Add routes for notification endpoints (GET /notifications, PATCH /notifications/:id/read)
+- [x] 5.7 Add routes for admin endpoints (GET /admin/pending, GET /admin/requests)
+- [x] 5.8 Configure CORS settings
 - [ ] 5.9 Deploy to staging stage
 
 ## 6. Frontend - API Client

@@ -117,3 +117,55 @@ output "aws_account_id" {
   description = "AWS account ID"
   value       = data.aws_caller_identity.current.account_id
 }
+
+# =============================================================================
+# API Gateway Outputs
+# =============================================================================
+
+output "api_gateway_id" {
+  description = "ID of the API Gateway API"
+  value       = module.api_gateway.api_id
+}
+
+output "api_gateway_endpoint" {
+  description = "Endpoint URL for the API Gateway API"
+  value       = module.api_gateway.api_endpoint
+}
+
+output "api_gateway_stage_name" {
+  description = "Name of the deployed API Gateway stage"
+  value       = module.api_gateway.stage_name
+}
+
+output "api_gateway_stage_url" {
+  description = "URL of the deployed API Gateway stage"
+  value       = module.api_gateway.stage_url
+}
+
+# =============================================================================
+# DynamoDB Access Table Outputs
+# =============================================================================
+
+output "dynamodb_access_table_name" {
+  description = "Name of the access-manager-data DynamoDB table"
+  value       = module.dynamodb_access.access_data_table_name
+}
+
+output "dynamodb_access_table_arn" {
+  description = "ARN of the access-manager-data DynamoDB table"
+  value       = module.dynamodb_access.access_data_table_arn
+}
+
+output "dynamodb_access_table_stream_arn" {
+  description = "ARN of the access-manager-data DynamoDB table stream"
+  value       = module.dynamodb_access.access_data_table_stream_arn
+}
+
+# =============================================================================
+# Lambda Functions Outputs
+# =============================================================================
+
+output "lambda_function_names" {
+  description = "Map of Lambda function names"
+  value       = module.lambda_functions.lambda_function_names
+}

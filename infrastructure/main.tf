@@ -161,3 +161,41 @@ resource "aws_resourcegroups_group" "access_manager" {
     ManagedBy   = "Terraform"
   }
 }
+
+# =============================================================================
+# Lambda Functions Module - Access Management API
+# =============================================================================
+
+module "lambda_functions" {
+  source = "./modules/lambda-functions"
+
+  project_name                     = var.project_name
+  dynamodb_access_table_name       = module.dynamodb_access.access_data_table_name
+  dynamodb_access_table_stream_arn = module.dynamodb_access.access_data_table_stream_arn
+  lambda_execution_role_arn        = module.iam.lambda_execution_role_arn
+  stage_name                       = "staging"
+
+  # Build paths - assumes Lambda code is built and zipped
+  lambda_zip_path = ""
+  runtime         = "nodejs20.x"
+  timeout         = 30
+  memory_size     = 256
+}
+
+# =============================================================================
+# API Gateway Module - HTTP API v2
+# =============================================================================
+
+module "api_gateway" {
+  source = "./modules/api-gateway"
+
+  project_name               = var.project_name
+  cognito_user_pool_id       = module.cognito.user_pool_id
+  cognito_app_client_id      = module.cognito.app_client_id
+  dynamodb_access_table_name = module.dynamodb_access.access_data_table_name
+  lambda_execution_role_arn  = module.iam.lambda_execution_role_arn
+  stage_name                 = "staging"
+  allowed_origins            = ["*"]
+
+  lambda_function_names = module.lambda_functions.lambda_function_names
+}
