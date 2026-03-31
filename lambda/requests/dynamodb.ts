@@ -3,7 +3,7 @@
 // ============================================================================
 
 import { docClient, getTableName, EntityType, generateId, getCurrentTimestamp } from "../shared"
-import { PutCommand, GetCommand, UpdateCommand, QueryCommand } from "@aws/lib-dynamodb"
+import { PutCommand, GetCommand, UpdateCommand, QueryCommand } from "@aws-sdk/lib-dynamodb"
 import type { AccessRequest, Approval, Notification } from "../shared/types"
 
 // GSI1 for status-based queries

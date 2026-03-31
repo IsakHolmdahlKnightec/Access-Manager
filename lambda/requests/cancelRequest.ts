@@ -6,7 +6,8 @@ import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 import { requireAuth } from "../shared/auth"
 import { successResponse, Errors } from "../shared/response"
 import { getRequestById, updateRequestStatus } from "./dynamodb"
-import { canCancelRequest, RequestStatus } from "../shared/dynamodb"
+import { canCancelRequest } from "./statusValidation"
+import { RequestStatus } from "../shared/dynamodb"
 import type { CancelRequestResponse } from "../shared/types"
 
 export const handler = async (

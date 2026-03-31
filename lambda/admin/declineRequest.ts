@@ -12,7 +12,8 @@ import {
   createNotification,
   getAllRequests,
 } from "../requests/dynamodb"
-import { canDeclineRequest, RequestStatus } from "../shared/dynamodb"
+import { canDeclineRequest } from "../requests/statusValidation"
+import { RequestStatus } from "../shared/dynamodb"
 import type { DeclineRequestResponse } from "../shared/types"
 
 // Notification type for request decline

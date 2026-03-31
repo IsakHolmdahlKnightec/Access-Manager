@@ -3,7 +3,7 @@
 // ============================================================================
 
 import { RequestStatus } from "../shared/dynamodb"
-import type { RequestStatusType } from "../shared/types"
+import type { RequestStatusType } from "../shared/dynamodb"
 
 /**
  * Valid status transitions for request lifecycle

@@ -64,8 +64,8 @@ export const handler = async (event: {
         continue
       }
 
-      const oldStatus = oldImage.status?.S
-      const newStatus = newImage.status?.S
+      const oldStatus = (oldImage.status as { S?: string })?.S
+      const newStatus = (newImage.status as { S?: string })?.S
 
       // Only proceed if status actually changed
       if (oldStatus === newStatus) {
@@ -73,13 +73,13 @@ export const handler = async (event: {
       }
 
       const statusChange: RequestStatusChange = {
-        requestId: newImage.requestId?.S || "",
-        accessId: newImage.accessId?.S || "",
-        accessName: newImage.accessName?.S || "",
-        userId: newImage.userId?.S || "",
+        requestId: (newImage.requestId as { S?: string })?.S || "",
+        accessId: (newImage.accessId as { S?: string })?.S || "",
+        accessName: (newImage.accessName as { S?: string })?.S || "",
+        userId: (newImage.userId as { S?: string })?.S || "",
         oldStatus: oldStatus || "",
         newStatus: newStatus || "",
-        timestamp: newImage.updatedAt?.S || new Date().toISOString(),
+        timestamp: (newImage.updatedAt as { S?: string })?.S || new Date().toISOString(),
       }
 
       // Determine notification based on new status

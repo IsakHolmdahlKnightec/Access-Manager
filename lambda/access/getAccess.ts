@@ -4,7 +4,7 @@
 
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 import { docClient, getTableName, EntityType } from "../shared"
-import { GetCommand } from "@aws/lib-dynamodb"
+import { GetCommand } from "@aws-sdk/lib-dynamodb"
 import { successResponse, Errors } from "../shared/response"
 import type { Access, GetAccessResponse } from "../shared/types"
 

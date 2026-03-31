@@ -3,7 +3,7 @@
 // ============================================================================
 
 import { docClient, getTableName, EntityType, generateId, getCurrentTimestamp } from "../shared"
-import { PutCommand, GetCommand, UpdateCommand, QueryCommand } from "@aws/lib-dynamodb"
+import { PutCommand, GetCommand, UpdateCommand, QueryCommand } from "@aws-sdk/lib-dynamodb"
 import type { Notification } from "../shared/types"
 
 /**
@@ -77,11 +77,9 @@ export const markNotificationAsRead = async (
       ExpressionAttributeValues: {
         ":pk": `USER#${userId}`,
         ":skPrefix": "#",
-      },
-      FilterExpression: "notificationId = :nid",
-      ExpressionAttributeValues: {
         ":nid": notificationId,
       },
+      FilterExpression: "notificationId = :nid",
     })
   )
 
@@ -127,11 +125,9 @@ export const markAllNotificationsAsRead = async (
       ExpressionAttributeValues: {
         ":pk": `USER#${userId}`,
         ":skPrefix": "#",
-      },
-      FilterExpression: "isRead = :isRead",
-      ExpressionAttributeValues: {
         ":isRead": false,
       },
+      FilterExpression: "isRead = :isRead",
     })
   )
 

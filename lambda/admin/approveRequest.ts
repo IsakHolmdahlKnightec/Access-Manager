@@ -11,7 +11,8 @@ import {
   addApproval,
   createNotification,
 } from "../requests/dynamodb"
-import { canApproveRequest, RequestStatus } from "../shared/dynamodb"
+import { canApproveRequest } from "../requests/statusValidation"
+import { RequestStatus } from "../shared/dynamodb"
 import type { ApproveRequestResponse } from "../shared/types"
 
 // Notification type for request approval

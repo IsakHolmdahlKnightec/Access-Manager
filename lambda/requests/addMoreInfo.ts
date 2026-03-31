@@ -6,7 +6,8 @@ import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
 import { requireAuth } from "../shared/auth"
 import { successResponse, Errors } from "../shared/response"
 import { getRequestById, updateRequestStatus } from "./dynamodb"
-import { canAddMoreInfo, RequestStatus } from "../shared/dynamodb"
+import { canAddMoreInfo } from "./statusValidation"
+import { RequestStatus } from "../shared/dynamodb"
 import type { AddMoreInfoResponse } from "../shared/types"
 
 const MIN_JUSTIFICATION_LENGTH = 10

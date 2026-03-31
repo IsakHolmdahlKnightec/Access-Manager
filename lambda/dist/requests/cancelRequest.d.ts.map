@@ -1,0 +1,1 @@
+{"version":3,"file":"cancelRequest.d.ts","sourceRoot":"","sources":["../../requests/cancelRequest.ts"],"names":[],"mappings":"AAIA,OAAO,KAAK,EAAE,oBAAoB,EAAE,qBAAqB,EAAE,MAAM,YAAY,CAAA;AAQ7E,eAAO,MAAM,OAAO,GAClB,OAAO,oBAAoB,KAC1B,OAAO,CAAC,qBAAqB,CAqD/B,CAAA"}

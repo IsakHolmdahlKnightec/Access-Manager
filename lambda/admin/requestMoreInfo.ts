@@ -11,7 +11,8 @@ import {
   createNotification,
   getAllRequests,
 } from "../requests/dynamodb"
-import { canRequestMoreInfo, RequestStatus } from "../shared/dynamodb"
+import { canRequestMoreInfo } from "../requests/statusValidation"
+import { RequestStatus } from "../shared/dynamodb"
 import type { RequestMoreInfoResponse } from "../shared/types"
 
 // Notification type for more info request

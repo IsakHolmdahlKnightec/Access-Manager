@@ -3,8 +3,8 @@
 // ============================================================================
 
 import type { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda"
-import { docClient, getTableName, parsePagination, AccessType } from "../shared"
-import { QueryCommand } from "@aws/lib-dynamodb"
+import { docClient, getTableName, parsePagination, AccessType, type AccessTypeValue } from "../shared"
+import { QueryCommand } from "@aws-sdk/lib-dynamodb"
 import { successResponse, Errors } from "../shared/response"
 import type { AccessListItem, GetAccessesResponse } from "../shared/types"
 
@@ -26,7 +26,7 @@ export const handler = async (
     )
 
     // Validate access type if provided
-    if (type && !Object.values(AccessType).includes(type as AccessType)) {
+    if (type && !Object.values(AccessType).includes(type as AccessTypeValue)) {
       return Errors.validationError(`Invalid access type: ${type}`)
     }
 
