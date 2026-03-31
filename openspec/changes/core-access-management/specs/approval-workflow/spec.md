@@ -28,7 +28,8 @@ The system SHALL allow admins to approve pending requests.
 
 #### Scenario: Approve pending request
 - **WHEN** admin clicks "Approve" on a pending request
-- **THEN** system SHALL update request status to "approved"
+- **THEN** system SHALL validate request is in "pending" status via `canApproveRequest()`
+- **AND** system SHALL update request status to "approved"
 - **AND** system SHALL record approver ID and approval timestamp
 - **AND** system SHALL create notification for requester
 - **AND** requester SHALL see access granted within their active accesses
@@ -44,7 +45,8 @@ The system SHALL allow admins to decline pending requests.
 
 #### Scenario: Decline with reason
 - **WHEN** admin clicks "Decline" on a pending request
-- **THEN** system SHALL prompt for decline reason (required)
+- **THEN** system SHALL validate request is in "pending" status via `canDeclineRequest()`
+- **AND** system SHALL prompt for decline reason (required)
 - **AND** admin SHALL provide reason text
 - **AND** system SHALL update request status to "declined"
 - **AND** system SHALL record decliner ID and timestamp
@@ -61,7 +63,8 @@ The system SHALL allow admins to request additional information from requesters.
 
 #### Scenario: Request more info
 - **WHEN** admin clicks "Need More Info" on a pending request
-- **THEN** system SHALL prompt for information request message (required)
+- **THEN** system SHALL validate request is in "pending" status via `canRequestMoreInfo()`
+- **AND** system SHALL prompt for information request message (required)
 - **AND** system SHALL update request status to "more_info"
 - **AND** system SHALL create notification for requester
 - **AND** requester SHALL be able to add additional justification
@@ -72,7 +75,8 @@ The system SHALL allow requesters to provide additional information on requests 
 
 #### Scenario: Provide additional info
 - **WHEN** user adds justification text and submits on "more_info" request
-- **THEN** system SHALL update request status back to "pending"
+- **THEN** system SHALL validate request is in "more_info" status via `canAddMoreInfo()`
+- **AND** system SHALL update request status back to "pending"
 - **AND** system SHALL append new justification to existing
 - **AND** system SHALL create notification for assigned admins
 

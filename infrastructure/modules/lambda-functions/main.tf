@@ -7,6 +7,19 @@
 data "aws_region" "current" {}
 
 # =============================================================================
+# Lambda Layer for AWS SDK Dependencies
+# =============================================================================
+# This layer contains @aws-sdk/client-dynamodb and @aws-sdk/lib-dynamodb
+# Shared across all Lambda functions to reduce deployment package size
+
+resource "aws_lambda_layer_version" "aws_sdk" {
+  filename            = var.lambda_layer_path != "" ? var.lambda_layer_path : "../../lambda/layer.zip"
+  layer_name          = "${var.project_name}-aws-sdk-layer"
+  description         = "AWS SDK v3 for DynamoDB operations"
+  compatible_runtimes = [var.runtime]
+}
+
+# =============================================================================
 # Access Functions
 # =============================================================================
 
@@ -19,6 +32,7 @@ resource "aws_lambda_function" "get_accesses" {
   timeout       = var.timeout
   memory_size   = var.memory_size
   description   = "List all accesses with optional filters"
+  layers        = [aws_lambda_layer_version.aws_sdk.arn]
 
   environment {
     variables = {
@@ -45,6 +59,7 @@ resource "aws_lambda_function" "get_access" {
   timeout       = var.timeout
   memory_size   = var.memory_size
   description   = "Get single access details"
+  layers        = [aws_lambda_layer_version.aws_sdk.arn]
 
   environment {
     variables = {
@@ -75,6 +90,7 @@ resource "aws_lambda_function" "get_requests" {
   timeout       = var.timeout
   memory_size   = var.memory_size
   description   = "List user's requests"
+  layers        = [aws_lambda_layer_version.aws_sdk.arn]
 
   environment {
     variables = {
@@ -101,6 +117,7 @@ resource "aws_lambda_function" "get_request" {
   timeout       = var.timeout
   memory_size   = var.memory_size
   description   = "Get request details"
+  layers        = [aws_lambda_layer_version.aws_sdk.arn]
 
   environment {
     variables = {
@@ -127,6 +144,7 @@ resource "aws_lambda_function" "create_request" {
   timeout       = var.timeout
   memory_size   = var.memory_size
   description   = "Create new access request"
+  layers        = [aws_lambda_layer_version.aws_sdk.arn]
 
   environment {
     variables = {
@@ -153,6 +171,7 @@ resource "aws_lambda_function" "cancel_request" {
   timeout       = var.timeout
   memory_size   = var.memory_size
   description   = "Cancel pending request"
+  layers        = [aws_lambda_layer_version.aws_sdk.arn]
 
   environment {
     variables = {
@@ -179,6 +198,7 @@ resource "aws_lambda_function" "add_more_info" {
   timeout       = var.timeout
   memory_size   = var.memory_size
   description   = "Add more information to request"
+  layers        = [aws_lambda_layer_version.aws_sdk.arn]
 
   environment {
     variables = {
@@ -209,6 +229,7 @@ resource "aws_lambda_function" "get_pending_requests" {
   timeout       = var.timeout
   memory_size   = var.memory_size
   description   = "List pending requests (admin)"
+  layers        = [aws_lambda_layer_version.aws_sdk.arn]
 
   environment {
     variables = {
@@ -235,6 +256,7 @@ resource "aws_lambda_function" "get_all_requests" {
   timeout       = var.timeout
   memory_size   = var.memory_size
   description   = "Admin request history"
+  layers        = [aws_lambda_layer_version.aws_sdk.arn]
 
   environment {
     variables = {
@@ -261,6 +283,7 @@ resource "aws_lambda_function" "approve_request" {
   timeout       = var.timeout
   memory_size   = var.memory_size
   description   = "Approve pending request"
+  layers        = [aws_lambda_layer_version.aws_sdk.arn]
 
   environment {
     variables = {
@@ -287,6 +310,7 @@ resource "aws_lambda_function" "decline_request" {
   timeout       = var.timeout
   memory_size   = var.memory_size
   description   = "Decline request with reason"
+  layers        = [aws_lambda_layer_version.aws_sdk.arn]
 
   environment {
     variables = {
@@ -313,6 +337,7 @@ resource "aws_lambda_function" "request_more_info" {
   timeout       = var.timeout
   memory_size   = var.memory_size
   description   = "Request additional information"
+  layers        = [aws_lambda_layer_version.aws_sdk.arn]
 
   environment {
     variables = {
@@ -343,6 +368,7 @@ resource "aws_lambda_function" "get_notifications" {
   timeout       = var.timeout
   memory_size   = var.memory_size
   description   = "List user notifications"
+  layers        = [aws_lambda_layer_version.aws_sdk.arn]
 
   environment {
     variables = {
@@ -369,6 +395,7 @@ resource "aws_lambda_function" "mark_notification_read" {
   timeout       = var.timeout
   memory_size   = var.memory_size
   description   = "Mark notification as read"
+  layers        = [aws_lambda_layer_version.aws_sdk.arn]
 
   environment {
     variables = {
@@ -395,6 +422,7 @@ resource "aws_lambda_function" "mark_all_notifications_read" {
   timeout       = var.timeout
   memory_size   = var.memory_size
   description   = "Bulk mark notifications as read"
+  layers        = [aws_lambda_layer_version.aws_sdk.arn]
 
   environment {
     variables = {
@@ -425,6 +453,7 @@ resource "aws_lambda_function" "notification_stream_handler" {
   timeout       = var.timeout
   memory_size   = var.memory_size
   description   = "DynamoDB stream handler for notification creation"
+  layers        = [aws_lambda_layer_version.aws_sdk.arn]
 
   environment {
     variables = {

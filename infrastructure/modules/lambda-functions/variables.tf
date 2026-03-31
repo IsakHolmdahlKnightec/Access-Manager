@@ -58,3 +58,9 @@ variable "memory_size" {
   type        = number
   default     = 256
 }
+
+variable "lambda_layer_path" {
+  description = "Path to the Lambda layer ZIP file containing AWS SDK"
+  type        = string
+  default     = ""
+}

@@ -83,6 +83,29 @@ GET    /admin/pending               - Admin: list pending requests
 GET    /admin/requests              - Admin: list all requests
 ```
 
+**Lambda Deployment Structure**:
+```
+lambda/
+├── layer.zip                    # AWS SDK layer (~3.5MB)
+├── access.zip                   # Access functions (~26KB)
+├── requests.zip                 # Request functions (~33KB)
+├── admin.zip                    # Admin functions (~26KB)
+├── notifications.zip            # Notification functions (~27KB)
+├── shared/                      # Shared utilities (auth, response helpers, types)
+├── access/                      # Access function source (TypeScript)
+├── requests/                    # Request function source (TypeScript)
+├── admin/                       # Admin function source (TypeScript)
+├── notifications/               # Notification function source (TypeScript)
+└── dist/                        # Compiled JavaScript output
+```
+
+**Build Process**:
+- TypeScript source files compile to `lambda/dist/`
+- Domain functions grouped into separate zip files for deployment
+- AWS SDK dependencies packaged in `layer.zip` (shared layer)
+- Each function zip contains only business logic (~25-35KB each)
+- Lambda layer reduces individual function size and cold start time
+
 ### Decision: React Query for Frontend State
 
 **Choice**: Use TanStack Query (React Query) v5 for server state management.

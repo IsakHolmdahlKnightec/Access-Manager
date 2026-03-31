@@ -44,6 +44,40 @@ The system SHALL create an IAM role for Lambda functions handling access managem
 - **AND** it SHALL grant access to CloudWatch Logs for Lambda
 - **AND** it SHALL follow least privilege with specific action restrictions
 
+### Requirement: Lambda layer for AWS SDK dependencies
+
+The system SHALL provide a Lambda layer containing shared AWS SDK dependencies.
+
+#### Scenario: Lambda layer provisioning
+- **WHEN** configuring Lambda functions
+- **THEN** it SHALL create a Lambda layer for AWS SDK v3 dependencies
+- **AND** layer SHALL include `@aws-sdk/client-dynamodb` and `@aws-sdk/lib-dynamodb`
+- **AND** layer SHALL be attached to all access management Lambda functions
+- **AND** layer attachment SHALL reduce deployment package size
+- **AND** layer version SHALL be compatible with the Lambda runtime (Node.js 20.x)
+
+#### Scenario: Lambda layer packaging
+- **WHEN** building deployment artifacts
+- **THEN** layer SHALL be packaged as `lambda/layer.zip`
+- **AND** layer SHALL follow Lambda layer directory structure (`nodejs/node_modules/`)
+- **AND** layer SHALL contain only production dependencies (no devDependencies)
+- **AND** layer zip SHALL be approximately 3-4MB in size
+
+### Requirement: Lambda function deployment packages
+
+The system SHALL organize Lambda functions into deployment packages by domain.
+
+#### Scenario: Function packaging structure
+- **WHEN** deploying Lambda functions
+- **THEN** functions SHALL be grouped into domain-specific zip files:
+  - `lambda/access.zip` - Access catalog functions (getAccesses, getAccess)
+  - `lambda/requests.zip` - Request management functions (getRequests, getRequest, createRequest, cancelRequest, addMoreInfo)
+  - `lambda/admin.zip` - Admin approval functions (getPendingRequests, getAllRequests, approveRequest, declineRequest, requestMoreInfo)
+  - `lambda/notifications.zip` - Notification functions (getNotifications, markNotificationRead, markAllNotificationsRead, streamHandler)
+- **AND** each zip SHALL contain compiled JavaScript from `lambda/dist/` directory
+- **AND** each zip SHALL be approximately 25-35KB (excluding AWS SDK, which is in layer)
+- **AND** shared code SHALL be located in `lambda/shared/` and included in all zips
+
 ### Requirement: API Gateway execution role
 
 The system SHALL create an IAM role for API Gateway to invoke Lambda functions.

@@ -103,6 +103,18 @@ The system SHALL track requests through a defined status lifecycle.
 - **THEN** status SHALL become "approved"
 - **AND** after approval, system SHALL mark access as granted to user
 
+### Requirement: Request status validation
+
+The system SHALL validate all request status transitions before applying changes.
+
+#### Scenario: Status validation module
+- **WHEN** implementing status transitions
+- **THEN** system SHALL use dedicated status validation module
+- **AND** module SHALL export validation functions: `canCancelRequest`, `canApproveRequest`, `canDeclineRequest`, `canRequestMoreInfo`, `canAddMoreInfo`
+- **AND** validation functions SHALL be centralized in `lambda/requests/statusValidation.ts`
+- **AND** each function SHALL return boolean indicating if transition is valid
+- **AND** validation SHALL prevent invalid transitions at the business logic layer
+
 ### Requirement: Request pagination
 
 The system SHALL paginate request lists for users with many requests.

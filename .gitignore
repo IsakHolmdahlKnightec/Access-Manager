@@ -52,3 +52,10 @@ infrastructure/.env
 
 # Local development files
 infrastructure/.terraform.lock.hcl
+
+
+# =============================================================================
+# Lambda
+# =============================================================================
+
+lambda/node_modules/*

@@ -8,7 +8,8 @@
 - [x] 1.6 Create IAM module for Lambda execution role
 - [x] 1.7 Add execution role for access management Lambda functions
 - [x] 1.8 Create API Gateway execution role for Lambda invocation
-- [ ] 1.9 Apply Terraform changes and verify table creation
+- [x] 1.9 Create Lambda layer for AWS SDK dependencies (@aws-sdk/client-dynamodb, @aws-sdk/lib-dynamodb)
+- [ ] 1.10 Apply Terraform changes and verify table creation
 
 ## 2. Lambda Functions - Core
 
@@ -18,8 +19,11 @@
 - [x] 2.4 Create Lambda function: `getRequests` - list user's requests
 - [x] 2.5 Create Lambda function: `getRequest` - get request details
 - [x] 2.6 Create Lambda function: `cancelRequest` - cancel pending request
-- [x] 2.7 Add request status validation helpers
+- [x] 2.7 Add request status validation helpers (moved to `statusValidation.ts`)
 - [x] 2.8 Implement DynamoDB single-table operations with entity discrimination
+- [x] 2.9 Fix AWS SDK imports (`@aws-sdk/lib-dynamodb` instead of `@aws/lib-dynamodb`)
+- [x] 2.10 Create Lambda build process (TypeScript compilation to `dist/`)
+- [x] 2.11 Package functions into domain-specific zips (access.zip, requests.zip, admin.zip, notifications.zip)
 
 ## 3. Lambda Functions - Admin
 
