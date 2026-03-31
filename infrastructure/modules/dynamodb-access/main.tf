@@ -38,31 +38,6 @@ resource "aws_dynamodb_table" "access_data" {
     type = "S"
   }
 
-  attribute {
-    name = "entityType"
-    type = "S"
-  }
-
-  attribute {
-    name = "status"
-    type = "S"
-  }
-
-  attribute {
-    name = "userId"
-    type = "S"
-  }
-
-  attribute {
-    name = "accessType"
-    type = "S"
-  }
-
-  attribute {
-    name = "timestamp"
-    type = "S"
-  }
-
   # Global Secondary Index 1 - For status-based queries
   # GSI1PK: "REQUEST#<status>" for pending request queries
   # GSI1SK: "<timestamp>" for chronological ordering
